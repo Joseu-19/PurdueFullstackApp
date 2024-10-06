@@ -1,0 +1,45 @@
+<html>
+  <%- include('../partials/head') %>
+  <body>
+    <%- include('../partials/menu') %>
+    <div class="mt-4 p-5 bg-warning text-white rounded">
+      <h1><%= title %></h1>
+    </div>
+    <!-- <div class="container"> -->
+    <form
+      action="/edit/<%= data.id %>"
+      method="POST"
+      style="border: 3px solid black; padding: 5px"
+    >
+      <div class="form-group">
+        <label for="topic">Topic:</label>
+        <input type="text" id="topic" name="topic" value="<%= data.topic %>" />
+      </div>
+      <div class="form-group form-check">
+        <label for="mandatory">Mandatory</label>
+        <input
+          type="checkbox"
+          class="form-control form-check-input"
+          id="mandatory"
+          name="mandatory"
+        />
+      </div>
+      <div class="form-group">
+        <label for="datetime">Date and Time</label>
+        <textarea name="datetime" id="datetime"><%= data.datetime %></textarea>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <textarea name="location" id="location"><%= data.location %></textarea>
+      </div>
+      <div class="form-group">
+        <label for="parking">Parking</label>
+        <textarea name="parking" id="parking"><%= data.parking %></textarea>
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <!-- </div> -->
+
+    <%- include('../partials/footer') %>
+  </body>
+</html>

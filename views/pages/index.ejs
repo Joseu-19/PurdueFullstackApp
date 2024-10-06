@@ -1,0 +1,50 @@
+<%- include('../partials/head.ejs') %>
+<body>
+    <%- include('../partials/menu.ejs') %>
+
+    <div class="mt-4 p-5 bg-warning text-white rounded">
+        <h1><%= title %></h1>
+    </div>
+
+    <div class="d-flex flex-wrap flex-column flex-sm-column flex-md-row flex-lg-row">
+        <% data.forEach((meeting, index) => { %>
+        <div class="meeting">
+            <p class="note">
+                <% if (meeting.mandatory) { %>
+                <span class="takenote">Attendance Mandatory</span><br>
+                <% } %>
+                <strong>Location:</strong> <%= meeting.location %><br>
+                <strong>Date and Time:</strong> <%= meeting.dateTime %><br>
+                <strong>Topic:</strong> <%= meeting.topic %><br>
+                <!-- Modal trigger -->
+                <button class="open-modal" data-parking="<%= meeting.parking %>" data-index="<%= index %>">Parking</button>
+            </p>
+        </div>
+        <% }); %>
+    </div>
+
+    <%- include('../partials/modal.ejs') %>
+
+    <script>
+        document.querySelectorAll(".open-modal").forEach(button => {
+            button.addEventListener("click", function () {
+                const parkingInfo = this.getAttribute("data-parking");
+                document.getElementById("parking-info").textContent = parkingInfo;
+                document.getElementById("parking-modal").style.display = "block";
+            });
+        });
+
+        document.querySelector(".close-modal").addEventListener("click", function () {
+            document.getElementById("parking-modal").style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("parking-modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>

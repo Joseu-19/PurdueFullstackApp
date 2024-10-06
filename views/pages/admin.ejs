@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/menu') %>
+
+    <div class="mt-4 p-5 bg-warning text-white rounded">
+      <h1><%= title %></h1>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <div class="row">
+        <!-- Column 1: Meetings List -->
+        <div class="col-sm-12 col-md-6">
+          <h1>Meetings</h1>
+          <ul class="list-group">
+            <% data.forEach((meeting, index) => { %>
+            <li class="list-group-item" id="<%= index %>">
+              <strong>Topic:</strong> <%= meeting.topic %><br />
+              <strong>Date and Time:</strong> <%= meeting.dateTime %><br />
+              <strong>Location:</strong> <%= meeting.location %><br />
+
+              <!-- Delete Form -->
+              <form
+                action="/delete/<%= meeting.id %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this meeting?');"
+              >
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Delete
+                </button>
+              </form>
+
+              <!-- Edit Link -->
+              <a class="nav-link" href="/edit/<%= meeting.id %>"
+                >Make Changes!</a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <!-- Column 2: Add New Meeting Form -->
+        <div class="col-sm-12 col-md-6">
+          <h2>Add a New Meeting</h2>
+          <form action="/add_meeting" method="POST" id="meetingForm">
+            <div class="form-group">
+              <label for="topic">Topic</label>
+              <input
+                type="text"
+                class="form-control"
+                id="topic"
+                name="topic"
+                required
+              />
+            </div>
+
+            <div class="form-group form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="mandatory"
+                name="mandatory"
+              />
+              <label for="mandatory" class="form-check-label">Mandatory</label>
+            </div>
+
+            <div class="form-group">
+              <label for="dateTime">Date & Time</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="dateTime"
+                name="dateTime"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                name="location"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="parking">Parking</label>
+              <input
+                type="text"
+                class="form-control"
+                id="parking"
+                name="parking"
+              />
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-primary">Add Meeting</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
